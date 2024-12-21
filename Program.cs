@@ -1,12 +1,10 @@
-﻿using aisd;
+﻿RandomTasks.AlarmClocks();
 
-Tasks.AlarmClocks();
+AisdStepikCourseTasks.CountingSort();
 
-Tasks.CountingSort();
+AisdStepikCourseTasks.DotsAndSegments();
 
-Tasks.DotsAndSegments();
-
-Tasks.MergeSortIterative();
+AisdStepikCourseTasks.MergeSortIterative();
 
 GrokAlgorithmsPractice.QuickSortPlayground();
 
@@ -14,7 +12,7 @@ LeetCodeTasks.GetSum(1, 2);
 
 LeetCodeTasks.MaximumCount([-3,-2,-1,0,0,1,2]);
 
-//GrokAlgorithmsPractice.BinarySearchPlayground();
+GrokAlgorithmsPractice.BinarySearchPlayground();
 
 LeetCodeTasks.MaxProfit([3,2,6,5,0,3]);
 

@@ -1,8 +1,5 @@
-using System.Runtime.CompilerServices;
-
-namespace aisd;
-
-public static class LeetCodeTasks {
+public static class LeetCodeTasks
+{
     #region 3Sum
     public static IList<IList<int>> ThreeSumWithSort(int[] nums)
     {

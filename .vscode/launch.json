@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "name": "C#: aisd-try-hard",
+            "type": "dotnet",
+            "request": "launch",
+            "projectPath": "${workspaceFolder}\\aisd-try-hard.csproj",
+            "launchConfigurationId": "TargetFramework=;aisd-try-hard"
+        }
+    ]
+}

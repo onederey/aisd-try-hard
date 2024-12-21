@@ -1,7 +1,3 @@
-using System.Diagnostics;
-
-namespace aisd;
-
 public class GrokAlgorithmsPractice
 {
     #region binary search
