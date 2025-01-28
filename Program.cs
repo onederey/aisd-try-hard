@@ -1,4 +1,4 @@
-﻿RandomTasks.AlarmClocks();
+﻿RandomTasks.PrefixFunctionPlayground();
 
 AisdStepikCourseTasks.CountingSort();
 
