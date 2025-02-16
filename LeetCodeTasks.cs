@@ -506,4 +506,232 @@ public static class LeetCodeTasks
         }
     }
     #endregion
+
+    #region 200. Number of Islands
+    public static int NumIslandsDFS(char[][] grid) {
+        var counter = 0;
+
+        for (var i = 0; i < grid.Length; i++)
+        {
+            for (var j = 0; j < grid[i].Length; j++)
+            {
+                if (grid[i][j] == '1')
+                {
+                    counter++;
+                    Dfs(i, j);
+                }
+            }
+        }
+
+        return counter;
+
+        void Dfs(int i, int j)
+        {
+            if (i < 0 || j < 0 || i > grid.Length - 1 || j > grid[i].Length - 1 || grid[i][j] != '1')
+            {
+                return;
+            }
+
+            grid[i][j] = '0';
+
+            Dfs(i+1, j);
+            Dfs(i, j+1);
+            Dfs(i-1, j);
+            Dfs(i, j-1);
+        }
+    }
+
+    public static int NumIslandsBFS(char[][] grid) {
+        var islands = 0;
+
+        for (var i = 0; i < grid.Length; i++)
+        {
+            for (var j = 0; j < grid[i].Length; j++)
+            {
+                if (grid[i][j] == '1')
+                {
+                    islands++;
+                    Bfs(i, j);
+                }
+            }
+        }
+
+        return islands;
+
+        void Bfs(int i, int j)
+        {
+            var q = new Queue<(int i, int j)>();
+            q.Enqueue((i, j));
+
+            while (q.TryDequeue(out var el))
+            {
+                if (el.i < 0 || el.i >= grid.Length || el.j < 0 || el.j >= grid[el.i].Length || grid[el.i][el.j] == '0')
+                {
+                    continue;
+                }
+
+                 grid[el.i][el.j] = '0';
+
+                q.Enqueue((el.i + 1, el.j));
+                q.Enqueue((el.i - 1, el.j));
+                
+                q.Enqueue((el.i, el.j + 1));
+                q.Enqueue((el.i, el.j - 1));
+            }
+        }
+    }
+    #endregion
+
+    #region 695. Max Area of Island
+    public static int MaxAreaOfIslandDFS(int[][] grid) {
+        var maxArea = 0;
+        var currentArea = 0;
+
+        for (var i = 0; i < grid.Length; i++)
+        {
+            for (var j = 0; j < grid[i].Length; j++)
+            {
+                if (grid[i][j] == 1)
+                {
+                    DFS(i, j);
+                    maxArea = Math.Max(currentArea, maxArea);
+                    currentArea = 0;
+                }
+            }
+        }
+
+        return maxArea;
+
+        void DFS(int i, int j)
+        {
+            if (i > grid.Length - 1 || i < 0 || j < 0 || j > grid[i].Length - 1 || grid[i][j] == 0)
+            {
+                return;
+            }
+
+            currentArea++;
+            grid[i][j] = 0;
+
+            DFS(i + 1, j);
+            DFS(i - 1, j);
+
+            DFS(i, j + 1);
+            DFS(i, j - 1);
+        }
+    }
+    #endregion
+
+    #region 733. Flood Fill
+    public static int[][] FloodFillDFS(int[][] image, int sr, int sc, int color) {
+        var initial = image[sr][sc];
+
+        if (initial != color)
+            DFS(sr, sc);
+
+        return image;
+
+        void DFS(int i, int j)
+        {
+            if (i < 0 || i > image.Length - 1 || j < 0 || j > image[i].Length - 1 || image[i][j] != initial)
+            {
+                return;
+            }
+
+            image[i][j] = color;
+
+            DFS(i + 1, j);
+            DFS(i - 1, j);
+
+            DFS(i, j + 1);
+            DFS(i, j - 1);
+        }
+    }
+    #endregion
+
+    #region 133. Clone Graph
+    public class Node {
+        public int val;
+        public IList<Node> neighbors;
+
+        public Node() {
+            val = 0;
+            neighbors = new List<Node>();
+        }
+
+        public Node(int _val) {
+            val = _val;
+            neighbors = new List<Node>();
+        }
+
+        public Node(int _val, List<Node> _neighbors) {
+            val = _val;
+            neighbors = _neighbors;
+        }
+    }
+
+    public static Node CloneGraphBFS(Node node) {
+        if (node is null) return null;
+        if (node.neighbors.Count == 0) return new Node(node.val);
+
+        var s = new Dictionary<Node, Node>();
+        var q = new Queue<Node>();
+
+        s[node] = new Node(node.val);
+        q.Enqueue(node);
+
+        while (q.TryDequeue(out var curr))
+        {
+            foreach (var nei in curr.neighbors)
+            {
+                if (!s.TryGetValue(nei, out _))
+                {
+                    s[nei] = new Node(nei.val);
+                    q.Enqueue(nei);
+                }
+
+                // Соседей добавить нужно всех, поэтому безусловно!
+                s[curr].neighbors.Add(s[nei]);
+            }
+        }
+
+        return s[node];
+    }
+
+    private static Dictionary<int, Node> CloneGraphDFSDict = [];
+
+    public static Node CloneGraphDFS(Node node) {
+        if (node is null) return null;
+        if (node.neighbors.Count == 0) return new Node(node.val);
+        if (CloneGraphDFSDict.TryGetValue(node.val, out var ex)) return ex;
+
+        var newNode = new Node(node.val);
+        CloneGraphDFSDict[newNode.val] = newNode;
+
+        foreach(var nei in node.neighbors)
+        {
+            newNode.neighbors.Add(CloneGraphDFS(nei));
+        }
+
+        return newNode;
+    }
+    #endregion
+
+    #region 205. Isomorphic Strings
+    public static bool IsIsomorphic(string s, string t) {
+        if (s.Length != t.Length) return false;
+        
+        var mapS = new Dictionary<int, int>();
+        var mapT = new Dictionary<int, int>();
+
+        for (var i = 0; i < s.Length; i++)
+        {
+            if (!mapS.TryGetValue(s[i], out var _)) mapS[s[i]] = i;
+            if (!mapT.TryGetValue(t[i], out var _)) mapT[t[i]] = i;
+
+            if (mapS[s[i]] != mapT[t[i]]) return false;
+        }
+
+        return true;
+    }
+    #endregion
 }

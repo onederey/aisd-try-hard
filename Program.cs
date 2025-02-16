@@ -1,4 +1,8 @@
-﻿RandomTasks.PrefixFunctionPlayground();
+﻿LeetCodeTasks.IsIsomorphic("badc", "baba");
+
+LeetCodeTasks.FloodFillDFS([[0,0,0],[0,0,0]], 0, 0, 0);
+
+RandomTasks.PrefixFunctionPlayground();
 
 AisdStepikCourseTasks.CountingSort();
 
