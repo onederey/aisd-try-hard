@@ -734,4 +734,55 @@ public static class LeetCodeTasks
         return true;
     }
     #endregion
+
+    #region 21. Merge Two Sorted Lists
+    public class ListNode(int val = 0, LeetCodeTasks.ListNode next = null)
+    {
+        public int val = val;
+        public ListNode next = next;
+    }
+
+    public static ListNode MergeTwoLists(ListNode list1, ListNode list2)
+    {
+        var result = new ListNode();
+
+        MergeInternal(list1, list2, result);
+
+        return result.next;
+
+        void MergeInternal(ListNode l1, ListNode l2, ListNode result)
+        {
+            if (l1 is null && l2 is null)
+            {
+                return;
+            }
+
+            result.next = new ListNode();
+            result = result.next;
+
+            if (l1 is null) 
+            {
+                result.val = l2.val;
+                l2 = l2.next;
+            }
+            else if (l2 is null)
+            {
+                result.val = l1.val;
+                l1 = l1.next;
+            }
+            else if (l1.val < l2.val) 
+            {
+                result.val = l1.val;
+                l1 = l1.next;
+            }
+            else 
+            {
+                result.val = l2.val;
+                l2 = l2.next;
+            }
+
+            MergeInternal(l1, l2, result);
+        }
+    }
+    #endregion
 }
