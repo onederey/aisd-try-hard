@@ -1,4 +1,6 @@
-﻿LeetCodeTasks.IsIsomorphic("badc", "baba");
+﻿AisdStepikCourseTasks2.Cinema();
+
+LeetCodeTasks.IsIsomorphic("badc", "baba");
 
 LeetCodeTasks.FloodFillDFS([[0,0,0],[0,0,0]], 0, 0, 0);
 
