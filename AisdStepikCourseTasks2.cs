@@ -1,8 +1,55 @@
+// Шаблон для отправки задач
+/*
+using System;
+
+public static class Program
+{
+    public static void Main()
+    {
+
+    }
+}
+*/
+
 /// <summary>
 /// Задачи курса Алгоритмы и структуры данных. Методы (https://stepik.org/course/181477)
 /// </summary>
 public static class AisdStepikCourseTasks2
 {
+    public static void Countzeros()
+    {
+        var num = int.Parse(Console.ReadLine());
+        Console.WriteLine(Count(num));
+
+        static int Count(int number)
+        {
+            if (number < 10)
+            {
+                return 0;
+            }
+
+            return number % 10 == 0
+                ? 1 + Count(number / 10)
+                : Count(number / 10);
+        }
+    }
+
+    public static void Palindrome()
+    {
+        var input = Console.ReadLine();
+        Console.WriteLine(IsPalindrome(0, input.Length - 1, input));
+
+        static bool IsPalindrome(int start, int end, string input)
+        {
+            if (start >= end)
+            {
+                return true;
+            }
+
+            return input[start] == input[end] && IsPalindrome(start + 1, end - 1, input);
+        }
+    }
+
     /// <summary>
     /// Ханойские башни...
     /// </summary>
@@ -91,16 +138,3 @@ public static class AisdStepikCourseTasks2
         Console.WriteLine(kate - masha);
     }
 }
-
-// Шаблон для отправки задач
-/*
-using System;
-
-public static class Program
-{
-    public static void Main()
-    {
-
-    }
-}
-*/
