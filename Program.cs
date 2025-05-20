@@ -1,4 +1,6 @@
-﻿ThreadTasks.CounterWithLimiter();
+AisdStepikCourseTasks2.Cinema();
+
+ThreadTasks.CounterWithLimiter();
 
 LeetCodeTasks.IsIsomorphic("badc", "baba");
 
