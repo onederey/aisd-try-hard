@@ -1,3 +1,7 @@
+﻿AisdStepikCourseTasks2.ChangeBaseOfNumber();
+
+AisdStepikCourseTasks2.ShowPartitions();
+
 AisdStepikCourseTasks2.Cinema();
 
 ThreadTasks.CounterWithLimiter();

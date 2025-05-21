@@ -16,7 +16,86 @@ public static class Program
 /// </summary>
 public static class AisdStepikCourseTasks2
 {
-    public static void Countzeros()
+    public static void ChangeBaseOfNumber()
+    {
+        var b = int.Parse(Console.ReadLine());
+        var n = int.Parse(Console.ReadLine());
+
+        var result = new System.Text.StringBuilder($"{n}(10)=");
+
+        ChangeBase(n);
+
+        result.Append($"({b})");
+
+        Console.WriteLine(result.ToString());
+
+        void ChangeBase(int current)
+        {
+            if (current < b)
+            {
+                result.Append(current);
+                return;
+            }
+
+            var print = current % b;
+            ChangeBase(current / b);
+            result.Append(print);
+        }
+    }
+
+    public static void ShowPartitions()
+    {
+        /*
+        1 1 1 1
+        2 1 1
+        2 2
+        3 1
+        4
+
+        1 1 1 1 1
+        2 1 1 1
+        2 2 1
+        3 1 1
+        3 2
+        4 1
+        5
+        */
+
+        // TODO: я не знаю как решить 🤣
+        throw new NotImplementedException();
+
+        var n = int.Parse(Console.ReadLine());
+
+        Show(n);
+        Show(n - 1);
+        Show(n - 2);
+
+        void Show(int num)
+        {
+            if (num == 1)
+            {
+                Console.Write(1);
+                Console.WriteLine();
+                return;
+            }
+
+            if (num == 0)
+            {
+                Console.WriteLine();
+                return;
+            }
+
+            var a = n - num;
+            Console.Write(num);
+
+            if (a < num)
+                Show(a);
+            if (a > num)
+                Show(num - 1);
+        }
+    }
+
+    public static void CountZeros()
     {
         var num = int.Parse(Console.ReadLine());
         Console.WriteLine(Count(num));
