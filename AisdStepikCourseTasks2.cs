@@ -20,6 +20,17 @@ using Structures;
 /// </summary>
 public static class AisdStepikCourseTasks2
 {
+    public static void GetItemAtMiddle()
+    {
+        var n = int.Parse(Console.ReadLine());
+        var linkedList = new MyLinkedList([.. Console.ReadLine().Split(" ").Select(s => int.Parse(s))]);
+
+        var middle = linkedList.Length / 2;
+        middle -= linkedList.Length % 2 == 0 ? 0 : 1;
+
+        Console.WriteLine(linkedList.ElementAt(middle));
+    }
+
     public static void DeleteAllFromLinkedList()
     {
         var n = int.Parse(Console.ReadLine());

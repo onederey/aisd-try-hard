@@ -10,6 +10,8 @@ public class MyLinkedList
 
     private int _length;
 
+    public int Length { get => _length; }
+
     class Node
     {
         public int Value { get; set; }
@@ -20,6 +22,33 @@ public class MyLinkedList
     public MyLinkedList(int[] values)
     {
         Init(values);
+    }
+
+    public int ElementAt(int val)
+    {
+        if (val < 0 || val >= _length)
+        {
+            throw new ArgumentOutOfRangeException(nameof(val));
+        }
+
+        if (val == 0)
+        {
+            return _head.Value;
+        }
+
+        if (val == _length - 1)
+        {
+            return _tail.Value;
+        }
+
+        var node = _head;
+        while (val > 0)
+        {
+            node = node.Next;
+            val--;
+        }
+
+        return node.Value;
     }
 
     public void RemoveAllOccurencies(int val)
@@ -49,7 +78,7 @@ public class MyLinkedList
                 node = _head;
                 continue;
             }
-            
+
             prev.Next = node.Next;
             node = node.Next;
 
