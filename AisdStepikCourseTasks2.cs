@@ -1,8 +1,10 @@
 // Шаблон для отправки задач
 /*
 using System;
+using System.Linq;
+using System.Text;
 
-public static class Program
+public class Program
 {
     public static void Main()
     {
@@ -11,11 +13,23 @@ public static class Program
 }
 */
 
+using Structures;
+
 /// <summary>
 /// Задачи курса Алгоритмы и структуры данных. Методы (https://stepik.org/course/181477)
 /// </summary>
 public static class AisdStepikCourseTasks2
 {
+    public static void DeleteAllFromLinkedList()
+    {
+        var n = int.Parse(Console.ReadLine());
+        var linkedList = new MyLinkedList([.. Console.ReadLine().Split(" ").Select(s => int.Parse(s))]);
+        var val = int.Parse(Console.ReadLine());
+
+        linkedList.RemoveAllOccurencies(val);
+        linkedList.PrintInLine();
+    }
+
     public static void ChangeBaseOfNumber()
     {
         var b = int.Parse(Console.ReadLine());

@@ -1,4 +1,6 @@
-﻿AisdStepikCourseTasks2.ChangeBaseOfNumber();
+﻿AisdStepikCourseTasks2.DeleteAllFromLinkedList();
+
+AisdStepikCourseTasks2.ChangeBaseOfNumber();
 
 AisdStepikCourseTasks2.ShowPartitions();
 
