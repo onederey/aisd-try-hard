@@ -1,4 +1,4 @@
-﻿AisdStepikCourseTasks2.DeleteAllFromLinkedList();
+﻿AisdStepikCourseTasks2.Meeting();
 
 AisdStepikCourseTasks2.ChangeBaseOfNumber();
 

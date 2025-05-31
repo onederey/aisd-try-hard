@@ -31,6 +31,16 @@ public static class AisdStepikCourseTasks2
         Console.WriteLine(linkedList.ElementAt(middle));
     }
 
+    public static void DeleteAllFromDoublyLinkedList()
+    {
+        var n = int.Parse(Console.ReadLine());
+        var dLinkedList = new DoublyLinkedList<int>([.. Console.ReadLine().Split(" ").Select(s => int.Parse(s))]);
+        var val = int.Parse(Console.ReadLine());
+
+        dLinkedList.RemoveAllOccurencies(val);
+        dLinkedList.PrintInLine();
+    }
+
     public static void DeleteAllFromLinkedList()
     {
         var n = int.Parse(Console.ReadLine());
