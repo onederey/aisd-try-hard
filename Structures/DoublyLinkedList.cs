@@ -4,7 +4,7 @@ namespace Structures;
 
 public class DoublyLinkedList<T>
 {
-    class Node
+    public class Node
     {
         public T Value { get; set; }
 
@@ -19,12 +19,42 @@ public class DoublyLinkedList<T>
 
     private int _length;
 
-    public DoublyLinkedList(T[] values)
+    private bool _looped;
+
+    public int Length => _length;
+
+    public DoublyLinkedList(T[] values, bool looped = false)
     {
+        _looped = looped;
         Init(values);
     }
 
-    public void RemoveAllOccurencies(int val)
+    public Node Find(Func<T, bool> predicate)
+    {
+        if (_length <= 0)
+        {
+            return null;
+        }
+
+        var node = _head;
+
+        var counter = 0;
+        while (counter != _length)
+        {
+            counter++;
+
+            if (predicate(node.Value))
+            {
+                return node;
+            }
+
+            node = node.Next;
+        }
+
+        return null;
+    }
+
+    public void RemoveAll(T val)
     {
         if (_length <= 0)
         {
@@ -33,8 +63,13 @@ public class DoublyLinkedList<T>
 
         var node = _head;
 
-        while (node != null)
+        var counter = 0;
+        var length = _length;
+
+        while (counter < length)
         {
+            counter++;
+
             if (!node.Value.Equals(val))
             {
                 node = node.Next;
@@ -43,7 +78,7 @@ public class DoublyLinkedList<T>
 
             _length--;
 
-            if (node.Prev is null)
+            if (node.Prev is null || node == _head)
             {
                 _head = _head.Next;
                 node = _head;
@@ -66,6 +101,8 @@ public class DoublyLinkedList<T>
 
             node = node.Next;
         }
+
+        LoopListIfNeeded();
     }
 
     public void PrintInLine(char separator = ' ')
@@ -78,8 +115,11 @@ public class DoublyLinkedList<T>
         var builder = new StringBuilder();
         var node = _head;
 
-        while (node is not null)
+        var counter = 0;
+        while (counter < _length)
         {
+            counter++;
+
             builder.Append(node.Value);
             builder.Append(separator);
             node = node.Next;
@@ -107,5 +147,18 @@ public class DoublyLinkedList<T>
         _head.Prev = null;
 
         _tail = node;
+
+        LoopListIfNeeded();
+    }
+
+    private void LoopListIfNeeded()
+    {
+        if (!_looped)
+        {
+            return;
+        }
+
+        _head.Prev = _tail;
+        _tail.Next = _head;
     }
 }

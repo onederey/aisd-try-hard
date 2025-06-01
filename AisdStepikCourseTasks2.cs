@@ -13,6 +13,7 @@ public class Program
 }
 */
 
+using System.Text;
 using Structures;
 
 /// <summary>
@@ -20,6 +21,58 @@ using Structures;
 /// </summary>
 public static class AisdStepikCourseTasks2
 {
+    class Child
+    {
+        public string Name;
+
+        public int LeaveOrder;
+    }
+
+    public static void Meeting()
+    {
+        // TODO: не проходит по времени! скорее всего проблема в поиске
+        _ = Console.ReadLine();
+        var names = Console
+            .ReadLine()
+            .Split(" ")
+            .Select(s => new Child
+            {
+                Name = s,
+                LeaveOrder = -1,
+            })
+            .ToArray();
+
+        var leaveOrder = Console
+            .ReadLine()
+            .Split(" ")
+            .Select(s =>
+            {
+                var num = int.Parse(s);
+                var name = names[num - 1];
+                name.LeaveOrder = num;
+
+                return num;
+            })
+            .ToArray();
+
+        var list = new DoublyLinkedList<Child>(names, looped: true);
+        var builder = new StringBuilder();
+
+        foreach (var l in leaveOrder)
+        {
+            var child = list.Find(c => c.LeaveOrder == l);
+
+            builder.Append(child.Prev.Value.Name);
+            builder.Append(' ');
+            builder.AppendLine(child.Next.Value.Name);
+
+            child.Prev.Next = child.Next;
+            child.Next.Prev = child.Prev;
+        }
+
+        Console.WriteLine(builder.ToString());
+    }
+
     public static void GetItemAtMiddle()
     {
         var n = int.Parse(Console.ReadLine());
@@ -37,7 +90,7 @@ public static class AisdStepikCourseTasks2
         var dLinkedList = new DoublyLinkedList<int>([.. Console.ReadLine().Split(" ").Select(s => int.Parse(s))]);
         var val = int.Parse(Console.ReadLine());
 
-        dLinkedList.RemoveAllOccurencies(val);
+        dLinkedList.RemoveAll(val);
         dLinkedList.PrintInLine();
     }
 
