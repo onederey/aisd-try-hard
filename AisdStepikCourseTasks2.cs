@@ -30,7 +30,6 @@ public static class AisdStepikCourseTasks2
 
     public static void Meeting()
     {
-        // TODO: не проходит по времени! скорее всего проблема в поиске
         _ = Console.ReadLine();
         var names = Console
             .ReadLine()
@@ -60,14 +59,13 @@ public static class AisdStepikCourseTasks2
 
         foreach (var l in leaveOrder)
         {
-            var child = list.Find(c => c.LeaveOrder == l);
+            var child = list.Get(names[l - 1]);
 
             builder.Append(child.Prev.Value.Name);
             builder.Append(' ');
             builder.AppendLine(child.Next.Value.Name);
 
-            child.Prev.Next = child.Next;
-            child.Next.Prev = child.Prev;
+            list.Remove(child);
         }
 
         Console.WriteLine(builder.ToString());

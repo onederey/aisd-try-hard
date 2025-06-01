@@ -13,6 +13,8 @@ public class DoublyLinkedList<T>
         public Node Prev { get; set; }
     }
 
+    private Dictionary<T, Node> _nodes = new();
+
     private Node _head;
 
     private Node _tail;
@@ -54,6 +56,44 @@ public class DoublyLinkedList<T>
         return null;
     }
 
+    public Node Get(T value)
+    {
+        return _nodes[value];
+    }
+
+    public Node Find(T value)
+    {
+        if (_length <= 0)
+        {
+            return null;
+        }
+
+        var node = _head;
+
+        var counter = 0;
+        while (counter != _length)
+        {
+            counter++;
+
+            if (value.Equals(node.Value))
+            {
+                return node;
+            }
+
+            node = node.Next;
+        }
+
+        return null;
+    }
+
+    public void Remove(Node node)
+    {
+        _nodes.Remove(node.Value);
+        node.Prev.Next = node.Next;
+        node.Next.Prev = node.Prev;
+        _length--;
+    }
+
     public void RemoveAll(T val)
     {
         if (_length <= 0)
@@ -76,6 +116,7 @@ public class DoublyLinkedList<T>
                 continue;
             }
 
+            _nodes.Remove(node.Value);
             _length--;
 
             if (node.Prev is null || node == _head)
@@ -141,6 +182,7 @@ public class DoublyLinkedList<T>
 
             node = node.Next;
             node.Value = value;
+            _nodes[value] = node;
         }
 
         _head = _head.Next;
