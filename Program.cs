@@ -1,4 +1,4 @@
-﻿AisdStepikCourseTasks2.Meeting();
+﻿AisdStepikCourseTasks2.RunStackCommands();
 
 AisdStepikCourseTasks2.ChangeBaseOfNumber();
 

@@ -13,6 +13,7 @@ public class Program
 }
 */
 
+using System.Collections;
 using System.Text;
 using Structures;
 
@@ -21,6 +22,62 @@ using Structures;
 /// </summary>
 public static class AisdStepikCourseTasks2
 {
+    public static void RunStackCommands()
+    {
+        var stack = new MyStack<int>();
+        var result = new StringBuilder();
+        
+        while (true)
+        {
+            var commandRaw = Console.ReadLine().Split(" ");
+            var command = commandRaw[0];
+            var arg = commandRaw.Length > 1 ? commandRaw[1] : "";
+
+            switch (command)
+            {
+                case "push":
+                    {
+                        stack.Push(int.Parse(arg));
+                        result.AppendLine("ok");
+                        break;
+                    }
+                case "pop":
+                    {
+                        result.AppendLine(
+                            stack.TryPop(out var pop)
+                                ? pop.ToString()
+                                : "error");
+                        break;
+                    }
+                case "back":
+                    {
+                        result.AppendLine(
+                            stack.TryPeek(out var peek)
+                                ? peek.ToString()
+                                : "error");
+                        break;
+                    }
+                case "size":
+                    {
+                        result.AppendLine(stack.Length.ToString());
+                        break;
+                    }
+                case "clear":
+                    {
+                        stack.Clear();
+                        result.AppendLine("ok");
+                        break;
+                    }
+                case "exit":
+                    {
+                        result.AppendLine("bye");
+                        Console.WriteLine(result.ToString());
+                        return;
+                    }
+            }
+        }
+    }
+
     class Child
     {
         public string Name;
