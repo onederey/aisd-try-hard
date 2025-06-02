@@ -1,4 +1,4 @@
-﻿AisdStepikCourseTasks2.RunStackCommands();
+﻿AisdStepikCourseTasks2.IsBracketsCorrect();
 
 AisdStepikCourseTasks2.ChangeBaseOfNumber();
 

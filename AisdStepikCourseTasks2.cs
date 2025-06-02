@@ -3,6 +3,7 @@
 using System;
 using System.Linq;
 using System.Text;
+using System.Collections.Generic;
 
 public class Program
 {
@@ -22,11 +23,51 @@ using Structures;
 /// </summary>
 public static class AisdStepikCourseTasks2
 {
+    public static void IsBracketsCorrect()
+    {
+        var table = new Dictionary<char, char>()
+        {
+            ['('] = ')',
+            ['['] = ']',
+            ['{'] = '}',
+        };
+
+        var brackets = Console.ReadLine();
+
+        var stack = new MyStack<char>();
+        var isCorrect = true;
+
+        foreach (var bracket in brackets)
+        {
+            if (table.ContainsKey(bracket))
+            {
+                stack.Push(bracket);
+            }
+            else if (stack.Length == 0)
+            {
+                isCorrect = false;
+                break;
+            }
+            else
+            {
+                _ = stack.TryPop(out var pop);
+
+                if (table[pop] != bracket)
+                {
+                    isCorrect = false;
+                    break;
+                }
+            }
+        }
+
+        Console.WriteLine(stack.Length == 0 && isCorrect ? "yes" : "no");
+    }
+
     public static void RunStackCommands()
     {
         var stack = new MyStack<int>();
         var result = new StringBuilder();
-        
+
         while (true)
         {
             var commandRaw = Console.ReadLine().Split(" ");
