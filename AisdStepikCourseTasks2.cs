@@ -15,7 +15,6 @@ public class Program
 */
 
 using System.Collections;
-using System.ComponentModel.Design.Serialization;
 using System.Text;
 using Structures;
 
@@ -24,6 +23,40 @@ using Structures;
 /// </summary>
 public static class AisdStepikCourseTasks2
 {
+    public static void GameOfDrunk()
+    {
+        var first = MyQueue<int>.Init([.. Console.ReadLine().Trim().Split(" ").Select(int.Parse)]);
+        var second = MyQueue<int>.Init([.. Console.ReadLine().Trim().Split(" ").Select(int.Parse)]);
+
+        var rounds = 10_000_000;
+
+        while (rounds > 0 && second.Length > 0 && first.Length > 0)
+        {
+            rounds--;
+
+            var f = first.Dequeue();
+            var s = second.Dequeue();
+
+            if ((s == 0 && f == 9 || s > f) && !(f == 0 && s == 9))
+            {
+                second.Enqueue(f);
+                second.Enqueue(s);
+            }
+            else
+            {
+                first.Enqueue(f);
+                first.Enqueue(s);
+            }
+        }
+
+        Console.WriteLine(
+            first.Length == 0
+                ? $"second {10_000_000 - rounds}" 
+                : second.Length == 0
+                    ? $"first {10_000_000 - rounds}"
+                    : "botva");
+    }
+
     public static void HowManyBracketsDelete()
     {
         var brackets = Console.ReadLine();

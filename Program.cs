@@ -1,4 +1,4 @@
-﻿AisdStepikCourseTasks2.IsBracketsCorrect();
+﻿AisdStepikCourseTasks2.GameOfDrunk();
 
 AisdStepikCourseTasks2.ChangeBaseOfNumber();
 
