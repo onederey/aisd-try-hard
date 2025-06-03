@@ -15,6 +15,7 @@ public class Program
 */
 
 using System.Collections;
+using System.ComponentModel.Design.Serialization;
 using System.Text;
 using Structures;
 
@@ -23,6 +24,65 @@ using Structures;
 /// </summary>
 public static class AisdStepikCourseTasks2
 {
+    public static void HowManyBracketsDelete()
+    {
+        var brackets = Console.ReadLine();
+        var stack = new MyStack<char>();
+        var result = 0;
+
+        foreach (var bracket in brackets)
+        {
+            if (bracket == '(')
+            {
+                stack.Push('(');
+            }
+            else if (stack.Length == 0)
+            {
+                result++;
+            }
+            else
+            {
+                stack.TryPop(out var _);
+            }
+        }
+
+        Console.WriteLine(result + stack.Length);
+    }
+
+    public static void GetSumWithStack()
+    {
+        var operations = new string[] { "+", "*", "-" };
+        var postfixString = Console.ReadLine();
+        var stack = new MyStack<int>();
+
+        foreach (var el in postfixString.Split(" "))
+        {
+            if (string.IsNullOrWhiteSpace(el))
+            {
+                continue;
+            }
+
+            if (!operations.Contains(el))
+            {
+                stack.Push(int.Parse(el));
+            }
+            else
+            {
+                stack.TryPop(out var b);
+                stack.TryPop(out var a);
+
+                switch (el)
+                {
+                    case "+": stack.Push(a + b); break;
+                    case "*": stack.Push(a * b); break;
+                    case "-": stack.Push(a - b); break;
+                }
+            }
+        }
+        stack.TryPop(out var res);
+        Console.WriteLine(res);
+    }
+
     public static void IsBracketsCorrect()
     {
         var table = new Dictionary<char, char>()
