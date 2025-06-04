@@ -1,4 +1,4 @@
-﻿AisdStepikCourseTasks2.GameOfDrunk();
+﻿AisdStepikCourseTasks2.Histogram();
 
 AisdStepikCourseTasks2.ChangeBaseOfNumber();
 

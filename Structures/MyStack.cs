@@ -38,6 +38,16 @@ public class MyStack<T>
         }
     }
 
+    public T Pop()
+    {
+        _length--;
+
+        var result = _head.Value;
+        _head = _head.Prev;
+
+        return result;
+    }
+
     public bool TryPop(out T result)
     {
         result = default;
@@ -47,12 +57,14 @@ public class MyStack<T>
             return false;
         }
 
-        _length--;
-
-        result = _head.Value;
-        _head = _head.Prev;
+        result = Pop();
 
         return true;
+    }
+
+    public T Peek()
+    {
+        return _head.Value;
     }
 
     public bool TryPeek(out T result)
@@ -64,7 +76,7 @@ public class MyStack<T>
             return false;
         }
 
-        result = _head.Value;
+        result = Peek();
 
         return true;
     }

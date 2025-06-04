@@ -15,6 +15,7 @@ public class Program
 */
 
 using System.Collections;
+using System.Runtime.InteropServices;
 using System.Text;
 using Structures;
 
@@ -23,21 +24,49 @@ using Structures;
 /// </summary>
 public static class AisdStepikCourseTasks2
 {
+    class HistogramNode
+    {
+        public long Pos { get; set; }
+        public long Height { get; set; }
+    }
+
+    // TODO: сделать свое решение, используя поиск наименьшего слева и поиск наименьшего справа
     public static void Histogram()
     {
         var histogram = Console.ReadLine().Split(" ").Skip(1).Select(long.Parse).ToArray();
-        var stack = new MyStack<long>();
+        var stack = new MyStack<HistogramNode>();
+
+        stack.Push(new HistogramNode
+        {
+            Pos = 0,
+            Height = -1,
+        });
+
         long result = 0;
 
-        for (var i = 0; i < histogram.Length; i++)
+        for (var i = 0; i <= histogram.Length; i++)
         {
-            
+            var h = i < histogram.Length ? histogram[i] : 0;
+            var x = (long)i;
+
+            while (h <= stack.Peek().Height)
+            {
+                var pop = stack.Pop();
+                x = pop.Pos;
+                result = Math.Max(result, pop.Height * (i - x));
+            }
+
+            stack.Push(new HistogramNode
+            {
+                Pos = x,
+                Height = h,
+            });
         }
 
         Console.WriteLine(result);
     }
 
-    public static void RunStackCommands()
+    public static void RunQueueCommands()
     {
         var queue = new MyQueue<int>();
         var result = new StringBuilder();
