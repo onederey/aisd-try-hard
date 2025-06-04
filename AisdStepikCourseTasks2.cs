@@ -23,6 +23,76 @@ using Structures;
 /// </summary>
 public static class AisdStepikCourseTasks2
 {
+    public static void Histogram()
+    {
+        var histogram = Console.ReadLine().Split(" ").Skip(1).Select(long.Parse).ToArray();
+        var stack = new MyStack<long>();
+        long result = 0;
+
+        for (var i = 0; i < histogram.Length; i++)
+        {
+            
+        }
+
+        Console.WriteLine(result);
+    }
+
+    public static void RunStackCommands()
+    {
+        var queue = new MyQueue<int>();
+        var result = new StringBuilder();
+
+        while (true)
+        {
+            var commandRaw = Console.ReadLine().Split(" ");
+            var command = commandRaw[0];
+            var arg = commandRaw.Length > 1 ? commandRaw[1] : "";
+
+            switch (command)
+            {
+                case "push":
+                    {
+                        queue.Enqueue(int.Parse(arg));
+                        result.AppendLine("ok");
+                        break;
+                    }
+                case "pop":
+                    {
+                        result.AppendLine(
+                            queue.TryDequeue(out var pop)
+                                ? pop.ToString()
+                                : "error");
+                        break;
+                    }
+                case "front":
+                    {
+                        result.AppendLine(
+                            queue.TryPeek(out var peek)
+                                ? peek.ToString()
+                                : "error");
+                        break;
+                    }
+                case "size":
+                    {
+                        result.AppendLine(queue.Length.ToString());
+                        break;
+                    }
+                case "clear":
+                    {
+                        queue.Clear();
+                        result.AppendLine("ok");
+                        break;
+                    }
+                case "exit":
+                    {
+                        result.AppendLine("bye");
+                        Console.WriteLine(result.ToString());
+                        return;
+                    }
+            }
+        }
+    }
+
     public static void GameOfDrunk()
     {
         var first = MyQueue<int>.Init([.. Console.ReadLine().Trim().Split(" ").Select(int.Parse)]);
@@ -51,7 +121,7 @@ public static class AisdStepikCourseTasks2
 
         Console.WriteLine(
             first.Length == 0
-                ? $"second {10_000_000 - rounds}" 
+                ? $"second {10_000_000 - rounds}"
                 : second.Length == 0
                     ? $"first {10_000_000 - rounds}"
                     : "botva");

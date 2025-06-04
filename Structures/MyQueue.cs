@@ -17,6 +17,18 @@ public class MyQueue<T>
 
     public int Length => _length;
 
+    public static MyQueue<T> Init(T[] values)
+    {
+        var queue = new MyQueue<T>();
+
+        foreach (var val in values)
+        {
+            queue.Enqueue(val);
+        }
+
+        return queue;
+    }
+
     public void Enqueue(T value)
     {
         _length++;
@@ -56,15 +68,38 @@ public class MyQueue<T>
         return value;
     }
 
-    public static MyQueue<T> Init(T[] values)
+    public void Clear()
     {
-        var queue = new MyQueue<T>();
+        _head = null;
+        _tail = null;
+        _length = 0;
+    }
 
-        foreach (var val in values)
+    public bool TryPeek(out T peek)
+    {
+        peek = default;
+
+        if (_length <= 0)
         {
-            queue.Enqueue(val);
+            return false;
         }
 
-        return queue;
+        peek = _head.Value;
+
+        return true;
+    }
+
+    public bool TryDequeue(out T pop)
+    {
+        pop = default;
+
+        if (_length <= 0)
+        {
+            return false;
+        }
+
+        pop = Dequeue();
+
+        return true;
     }
 }
