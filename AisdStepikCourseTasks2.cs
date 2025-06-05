@@ -24,6 +24,60 @@ using Structures;
 /// </summary>
 public static class AisdStepikCourseTasks2
 {
+    // TODO: сдать! 06.06.2025!
+    public static void RunQueueCommands2()
+    {
+        var c = int.Parse(Console.ReadLine());
+        var q = new MyQueue<string>();
+        var output = new StringBuilder();
+
+        for (var i = 0; i < c; i++)
+        {
+            var commandRaw = Console.ReadLine().Split(" ");
+            var command = commandRaw[0];
+
+            switch (command)
+            {
+                case "ADD":
+                    {
+                        q.Enqueue(commandRaw[1]);
+                        break;
+                    }
+                case "NEXT":
+                    {
+                        if (!q.TryDequeue(out var d))
+                        {
+                            output.AppendLine("Queue is empty");
+                        }
+                        break;
+                    }
+                case "COUNT":
+                    {
+                        output.AppendLine(q.Length.ToString());
+                        break;
+                    }
+            }
+        }
+
+        Console.WriteLine(output.ToString());
+    }
+
+    public static void ShowRequestsStartTimeWithoutQueue()
+    {
+        var c = int.Parse(Console.ReadLine());
+        var nextJobAt = 0;
+
+        for (var i = 0; i < c; i++)
+        {
+            var req = Console.ReadLine().Split(" ").Select(int.Parse).ToArray();
+
+            Console.WriteLine(Math.Max(nextJobAt, req[0]));
+
+            if (nextJobAt == 0) nextJobAt += req[0] + req[1];
+            else nextJobAt += req[1];
+        }
+    }
+
     class HistogramNode
     {
         public long Pos { get; set; }

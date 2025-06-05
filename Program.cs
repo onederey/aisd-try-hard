@@ -1,4 +1,4 @@
-﻿AisdStepikCourseTasks2.Histogram();
+﻿AisdStepikCourseTasks2.ShowRequestsStartTimeWithoutQueue();
 
 AisdStepikCourseTasks2.ChangeBaseOfNumber();
 
