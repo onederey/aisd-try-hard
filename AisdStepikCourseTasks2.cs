@@ -24,7 +24,6 @@ using Structures;
 /// </summary>
 public static class AisdStepikCourseTasks2
 {
-    // TODO: сдать! 06.06.2025!
     public static void RunQueueCommands2()
     {
         var c = int.Parse(Console.ReadLine());
