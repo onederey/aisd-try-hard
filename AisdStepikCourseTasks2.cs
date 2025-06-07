@@ -24,6 +24,35 @@ using Structures;
 /// </summary>
 public static class AisdStepikCourseTasks2
 {
+    public static void PrefixSums()
+    {
+        var input = Console.ReadLine().Split(' ');
+        var q = int.Parse(input[1]);
+
+        var arr = Console.ReadLine().Split(' ').Select(int.Parse).ToArray();
+        var prefix = new int[arr.Length];
+
+        prefix[0] = arr[0];
+        for (var i = 1; i < arr.Length; i++)
+        {
+            prefix[i] += prefix[i - 1] + arr[i];
+        }
+
+        var answer = 0;
+        for (var i = 0; i < q; i++)
+        {
+            var req = Console.ReadLine().Split(' ');
+            
+            var l = int.Parse(req[0]);
+            var r = int.Parse(req[1]);
+
+            if (l == 1) answer += prefix[r - 1];
+            else answer += prefix[r - 1] - prefix[l - 2];
+        }
+
+        Console.WriteLine(answer);
+    }
+
     public static void DeepOfBrackets()
     {
         var brackets = Console.ReadLine();

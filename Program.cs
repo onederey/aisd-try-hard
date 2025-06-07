@@ -1,4 +1,4 @@
-﻿AisdStepikCourseTasks2.ShowRequestsStartTimeWithoutQueue();
+﻿AisdStepikCourseTasks2.PrefixSums();
 
 AisdStepikCourseTasks2.ChangeBaseOfNumber();
 
