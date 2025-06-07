@@ -24,6 +24,52 @@ using Structures;
 /// </summary>
 public static class AisdStepikCourseTasks2
 {
+    public static void DeepOfBrackets()
+    {
+        var brackets = Console.ReadLine();
+        var s = new MyStack<char>();
+
+        var maxDeep = 0;
+
+        foreach (var bracket in brackets)
+        {
+            if (bracket == '(')
+            {
+                s.Push(bracket);
+            }
+            else
+            {
+                maxDeep = Math.Max(maxDeep, s.Length);
+                s.TryPop(out var _);
+            }
+        }
+
+        Console.WriteLine(maxDeep);
+    }
+
+    public static void RunDequeCommands()
+    {
+        var c = int.Parse(Console.ReadLine());
+        var d = new Deque<string>();
+        var output = new StringBuilder();
+
+        for (var i = 0; i < c; i++)
+        {
+            var commandRaw = Console.ReadLine().Split(" ");
+            var command = commandRaw[0];
+
+            switch (command)
+            {
+                case "1": d.PushFront(commandRaw[1]); break;
+                case "2": d.PushBack(commandRaw[1]); break;
+                case "3": output.AppendLine(d.PopFront()); break;
+                case "4": output.AppendLine(d.PopBack()); break;
+            }
+        }
+
+        Console.WriteLine(output.ToString());
+    }
+
     public static void RunQueueCommands2()
     {
         var c = int.Parse(Console.ReadLine());
