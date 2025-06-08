@@ -1,4 +1,4 @@
-﻿AisdStepikCourseTasks2.PrefixSums();
+﻿AisdStepikCourseTasks2.NearestSmallerLeftAndRight();
 
 AisdStepikCourseTasks2.ChangeBaseOfNumber();
 

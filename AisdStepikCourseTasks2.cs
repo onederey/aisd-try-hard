@@ -24,6 +24,52 @@ using Structures;
 /// </summary>
 public static class AisdStepikCourseTasks2
 {
+    public static void NearestSmallerLeftAndRight()
+    {
+        _ = Console.ReadLine();
+        var a = Console
+            .ReadLine()
+            .Split(' ')
+            .Select(int.Parse)
+            .ToArray();
+
+        var s = new MyStack<int>();
+
+        var fromLeft = new int[a.Length];
+        var fromRight = new int[a.Length];
+
+        // Меньший ближайший слева элемент
+        for (var i = 0; i < a.Length; i++)
+        {
+            while (s.Length > 0 && s.Peek() >= a[i]) s.Pop();
+
+            if (s.Length > 0) fromLeft[i] = s.Peek();
+            else fromLeft[i] = 0;
+
+            s.Push(a[i]);
+        }
+
+        s.Clear();
+
+        // Меньший ближайший справа элемент
+        for (var i = a.Length - 1; i >= 0; i--)
+        {
+            while (s.Length > 0 && s.Peek() >= a[i]) s.Pop();
+
+            if (s.Length > 0) fromRight[i] = s.Peek();
+            else fromRight[i] = 0;
+
+            s.Push(a[i]);
+        }
+        var result = new StringBuilder();
+        for (var i = 0; i < a.Length; i++)
+        {
+            result.AppendLine($"{fromLeft[i]} {fromRight[i]}");
+        }
+
+        Console.WriteLine(result.ToString());
+    }
+
     public static void PrefixSums()
     {
         var input = Console.ReadLine().Split(' ');
@@ -42,7 +88,7 @@ public static class AisdStepikCourseTasks2
         for (var i = 0; i < q; i++)
         {
             var req = Console.ReadLine().Split(' ');
-            
+
             var l = int.Parse(req[0]);
             var r = int.Parse(req[1]);
 
