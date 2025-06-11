@@ -24,6 +24,82 @@ using Structures;
 /// </summary>
 public static class AisdStepikCourseTasks2
 {
+    #region сортировки
+
+    // Сортировка вставками
+    public static void InsertionSort()
+    {
+        var n = int.Parse(Console.ReadLine());
+        var a = Console.ReadLine().Split(" ").Select(int.Parse).ToArray();
+
+        Sort(a);
+
+        foreach (var el in a)
+        {
+            Console.Write($"{el} ");
+        }
+
+        static void Sort(int[] array)
+        {
+            for (var i = 1; i < array.Length; i++)
+            {
+                var current = array[i];
+                var j = i - 1;
+
+                // Ищем новое место для элемента линейным поиском
+                for (; j >= 0; j--)
+                {
+                    if (array[j] <= current)
+                    {
+                        break;
+                    }
+
+                    // Параллельно сдвигаем элементы, чтобы новое найденное место было свободно
+                    array[j + 1] = array[j];
+                }
+
+                // Ставим элемент на новое место
+                array[j + 1] = current;
+            }
+        }
+    }
+
+    #endregion
+
+    // TODO: переписать на мин и макс дек! (текущее решение не оптимально и не проходит по времени)
+    public static void MinInWindow()
+    {
+        var input = Console.ReadLine().Split(' ');
+        var k = int.Parse(input[1]);
+
+        var a = Console.ReadLine().Split(' ').Select(int.Parse).ToArray();
+
+        var minLen = int.MaxValue;
+
+        for (var i = 0; i < a.Length - 1; i++)
+        {
+            for (var j = i + 1; j < a.Length; j++)
+            {
+                if (minLen == 2)
+                {
+                    Console.WriteLine(2);
+                    return;
+                }
+
+                var len = j - i + 1;
+                if (len >= minLen) break;
+
+                var p = 0;
+                if (a[i] > a[j]) p = a[i] - a[j];
+                else p = a[j] - a[i];
+
+                if (p >= k) minLen = Math.Min(minLen, len);
+            }
+        }
+
+        Console.WriteLine(minLen == int.MaxValue ? 0 : minLen);
+    }
+
     public static void NearestSmallerLeftAndRight()
     {
         _ = Console.ReadLine();
