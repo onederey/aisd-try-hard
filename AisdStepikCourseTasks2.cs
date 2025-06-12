@@ -26,6 +26,37 @@ public static class AisdStepikCourseTasks2
 {
     #region сортировки
 
+    public static void SelectionSort()
+    {
+        var n = int.Parse(Console.ReadLine());
+        var a = Console.ReadLine().Split(" ").Select(int.Parse).ToArray();
+
+        Sort(a);
+
+        foreach (var el in a)
+        {
+            Console.Write($"{el} ");
+        }
+
+        static void Sort(int[] array)
+        {
+            for (var i = 0; i < array.Length - 1; i++)
+            {
+                var minIndex = i;
+
+                for (var j = i + 1; j < array.Length; j++)
+                {
+                    if (array[j] < array[minIndex])
+                    {
+                        minIndex = j;
+                    }
+                }
+
+                (array[i], array[minIndex]) = (array[minIndex], array[i]);
+            }
+        }
+    }
+
     // Сортировка вставками
     public static void InsertionSort()
     {

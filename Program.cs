@@ -1,4 +1,4 @@
-﻿AisdStepikCourseTasks2.InsertionSort();
+﻿AisdStepikCourseTasks2.SelectionSort();
 
 AisdStepikCourseTasks2.ChangeBaseOfNumber();
 
