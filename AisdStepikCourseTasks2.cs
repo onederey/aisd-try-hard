@@ -24,8 +24,45 @@ using Structures;
 /// </summary>
 public static class AisdStepikCourseTasks2
 {
-    #region сортировки
+    public static int UpperBound(int[] a, int target)
+    {
+        var left = 0;
+        var right = a.Length;
 
+        while (left < right)
+        {
+            var mid = (left + right) / 2;
+            var guess = a[mid];
+
+            if (guess > target)
+                right = mid;
+            else
+                left = mid + 1;
+        }
+
+        return right;
+    }
+
+    public static int LowerBound(int[] a, int target)
+    {
+        var left = 0;
+        var right = a.Length;
+
+        while (left < right)
+        {
+            var mid = (left + right) / 2;
+            var guess = a[mid];
+
+            if (guess < target)
+                left = mid + 1;
+            else
+                right = mid;
+        }
+
+        return left;
+    }
+
+    #region сортировки
     public static void SelectionSort()
     {
         var n = int.Parse(Console.ReadLine());
