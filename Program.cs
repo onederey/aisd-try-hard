@@ -1,4 +1,6 @@
-﻿Console.WriteLine(AisdStepikCourseTasks2.LowerBound([1, 3, 3, 3, 4, 5], 3));
+﻿AisdStepikCourseTasks.EditDistance();
+
+Console.WriteLine(AisdStepikCourseTasks2.LowerBound([1, 3, 3, 3, 4, 5], 3));
 
 AisdStepikCourseTasks2.ChangeBaseOfNumber();
 

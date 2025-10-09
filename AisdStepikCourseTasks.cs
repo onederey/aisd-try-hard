@@ -834,7 +834,7 @@ public static class AisdStepikCourseTasks
         for (var i = 0; i < nums.Length; i++)
         {
             var j = FindLowerBound(subResult, nums[i]);
-            
+
             if (subResult[j - 1] >= nums[i] && nums[i] >= subResult[j])
             {
                 subResult[j] = nums[i];
@@ -859,7 +859,7 @@ public static class AisdStepikCourseTasks
 
         return;
 
-        static int FindLowerBound(int[] nums,  int num)
+        static int FindLowerBound(int[] nums, int num)
         {
             var l = 0;
             var r = nums.Length - 1;
@@ -883,6 +883,56 @@ public static class AisdStepikCourseTasks
 
             return res;
         }
+    }
+    #endregion
+
+    #region Расстояние редактирования
+    
+    // TODO: оптимизировать, можно хранить только две строки - текущую и предыдущую, а не всю таблицу
+    // TODO: реализовать восстановление ответа, для восстановления потребуется таблица
+
+    public static void EditDistance()
+    {
+        var a = Console.ReadLine();
+        var b = Console.ReadLine();
+
+        var d = new int[a.Length + 1, b.Length + 1];
+
+        for (var i = 0; i < d.GetLength(0); i++)
+        {
+            d[i, 0] = i;
+        }
+
+        for (var j = 0; j < d.GetLength(1); j++)
+        {
+            d[0, j] = j;
+        }
+
+        for (var i = 1; i < d.GetLength(0); i++)
+        {
+            for (var j = 1; j < d.GetLength(1); j++)
+            {
+                var c = a[i - 1] == b[j - 1] ? 0 : 1;
+                d[i, j] = Math.Min(
+                    Math.Min(
+                        d[i, j - 1] + 1,
+                        d[i - 1, j] + 1),
+                    d[i - 1, j - 1] + c
+                );
+            }
+        }
+
+        // for (var i = 0; i < d.GetLength(0); i++)
+        // {
+        //     for (var j = 0; j < d.GetLength(1); j++)
+        //     {
+        //         Console.Write(d[i, j] + " ");
+        //     }
+
+        //     Console.WriteLine();
+        // }
+
+        Console.WriteLine(d[a.Length, b.Length]);
     }
     #endregion
 }
