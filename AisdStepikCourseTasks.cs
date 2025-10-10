@@ -1,3 +1,4 @@
+using System.ComponentModel;
 using System.Text;
 
 /// <summary>
@@ -887,7 +888,7 @@ public static class AisdStepikCourseTasks
     #endregion
 
     #region Расстояние редактирования
-    
+
     // TODO: оптимизировать, можно хранить только две строки - текущую и предыдущую, а не всю таблицу
     // TODO: реализовать восстановление ответа, для восстановления потребуется таблица
 
@@ -934,5 +935,40 @@ public static class AisdStepikCourseTasks
 
         Console.WriteLine(d[a.Length, b.Length]);
     }
+    #endregion
+
+    #region Рюкзак!
+
+    // Динамическое программирование, в задаче нельзя пилить вещи на части.
+    // Если кратко, то составляем таблицу - сопоставление, в пересечении которой максимальный вес рюкзака.
+    public static void KnapsackWithoutRepsBU()
+    {
+        var input = Console.ReadLine().Split(" ").Select(int.Parse).ToArray();
+
+        var W = input[0];
+        var n = input[1];
+
+        var w = Console.ReadLine().Split(" ").Select(int.Parse).ToArray();
+
+        var d = new int[n + 1, W + 1];
+
+        for (var i = 1; i <= n; i++)
+        {
+            for (var j = 1; j <= W; j++)
+            {
+                d[i, j] = d[i - 1, j];
+
+                if (w[i - 1] <= j)
+                {
+                    d[i, j] = Math.Max(
+                        d[i, j],
+                        w[i - 1] + d[i - 1, j - w[i - 1]]);
+                }
+            }
+        }
+
+        Console.WriteLine(d[n, W]);
+    }
+
     #endregion
 }
