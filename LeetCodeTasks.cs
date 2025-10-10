@@ -1,10 +1,26 @@
+public class TreeNode
+{
+    public int val;
+
+    public TreeNode left;
+
+    public TreeNode right;
+
+    public TreeNode(int val = 0, TreeNode left = null, TreeNode right = null)
+    {
+        this.val = val;
+        this.left = left;
+        this.right = right;
+    }
+}
+
 public static class LeetCodeTasks
 {
     #region 3Sum
     public static IList<IList<int>> ThreeSumWithSort(int[] nums)
     {
         IList<IList<int>> result = new List<IList<int>>();
-        
+
         // Сортируем массив, для упрощения дальнейшей работы с 2Sum
         Array.Sort(nums);
 
@@ -79,7 +95,7 @@ public static class LeetCodeTasks
             set.Clear();
 
             var target = 0 - nums[i];
-            
+
             for (var j = i + 1; j < nums.Length; j++)
             {
                 var newNum = target - nums[j];
@@ -91,7 +107,7 @@ public static class LeetCodeTasks
                 set.Add(nums[j]);
             }
         }
-        
+
 
         return result;
     }
@@ -130,7 +146,7 @@ public static class LeetCodeTasks
     public static bool HappyNumberWithHashSet(int n)
     {
         var set = new HashSet<int> { n };
-        
+
         while (true)
         {
             var currentNum = GetSquare(n);
@@ -230,7 +246,7 @@ public static class LeetCodeTasks
             {
                 r++;
             }
-            
+
             chars[p] = chars[l];
             p++;
 
@@ -274,7 +290,7 @@ public static class LeetCodeTasks
             {
                 result.Add(string.Concat(nums[l], "->", nums[r]));
             }
-            else 
+            else
             {
                 result.Add(nums[l].ToString());
             }
@@ -333,7 +349,7 @@ public static class LeetCodeTasks
                 firstMinusIndex = m;
                 l = m + 1;
             }
-            else 
+            else
             {
                 r = m - 1;
             }
@@ -366,7 +382,8 @@ public static class LeetCodeTasks
     #endregion
 
     #region 217. Contains Duplicate
-    public static bool ContainsDuplicate(int[] nums) {
+    public static bool ContainsDuplicate(int[] nums)
+    {
         var set = new HashSet<int>();
 
         foreach (var num in nums)
@@ -384,28 +401,14 @@ public static class LeetCodeTasks
     #endregion
 
     #region (ОТЛОЖИЛ) 371. Sum of Two Integers
-    public static int GetSum(int a, int b) {
+    public static int GetSum(int a, int b)
+    {
         throw new NotImplementedException("Отложил, операции с битами сейчас очень не хочется изучать...");
     }
     #endregion
 
     #region 100. Same Tree
-    public class TreeNode
-    {
-        public int val;
-        
-        public TreeNode left;
-        
-        public TreeNode right;
-        
-        public TreeNode(int val=0, TreeNode left=null, TreeNode right=null)
-        {
-            this.val = val;
-            this.left = left;
-            this.right = right;
-        }
-    }
-    
+
     public static bool IsSameTree(TreeNode p, TreeNode q)
     {
         var queue = new Queue<TreeNode>();
@@ -441,7 +444,7 @@ public static class LeetCodeTasks
         if (p == q)
             return true;
 
-        if (p != null && q != null && p.val == q.val) 
+        if (p != null && q != null && p.val == q.val)
             return IsSameTreeRecursive(p.left, q.left) && IsSameTreeRecursive(p.right, q.right);
 
         return false;
@@ -471,7 +474,8 @@ public static class LeetCodeTasks
     #endregion
 
     #region 102. Binary Tree Level Order Traversal
-    public static IList<IList<int>> LevelOrder(TreeNode root) {
+    public static IList<IList<int>> LevelOrder(TreeNode root)
+    {
         IList<IList<int>> result = [];
 
         if (root?.val is not null)
@@ -508,7 +512,8 @@ public static class LeetCodeTasks
     #endregion
 
     #region 200. Number of Islands
-    public static int NumIslandsDFS(char[][] grid) {
+    public static int NumIslandsDFS(char[][] grid)
+    {
         var counter = 0;
 
         for (var i = 0; i < grid.Length; i++)
@@ -534,14 +539,15 @@ public static class LeetCodeTasks
 
             grid[i][j] = '0';
 
-            Dfs(i+1, j);
-            Dfs(i, j+1);
-            Dfs(i-1, j);
-            Dfs(i, j-1);
+            Dfs(i + 1, j);
+            Dfs(i, j + 1);
+            Dfs(i - 1, j);
+            Dfs(i, j - 1);
         }
     }
 
-    public static int NumIslandsBFS(char[][] grid) {
+    public static int NumIslandsBFS(char[][] grid)
+    {
         var islands = 0;
 
         for (var i = 0; i < grid.Length; i++)
@@ -570,11 +576,11 @@ public static class LeetCodeTasks
                     continue;
                 }
 
-                 grid[el.i][el.j] = '0';
+                grid[el.i][el.j] = '0';
 
                 q.Enqueue((el.i + 1, el.j));
                 q.Enqueue((el.i - 1, el.j));
-                
+
                 q.Enqueue((el.i, el.j + 1));
                 q.Enqueue((el.i, el.j - 1));
             }
@@ -583,7 +589,8 @@ public static class LeetCodeTasks
     #endregion
 
     #region 695. Max Area of Island
-    public static int MaxAreaOfIslandDFS(int[][] grid) {
+    public static int MaxAreaOfIslandDFS(int[][] grid)
+    {
         var maxArea = 0;
         var currentArea = 0;
 
@@ -622,7 +629,8 @@ public static class LeetCodeTasks
     #endregion
 
     #region 733. Flood Fill
-    public static int[][] FloodFillDFS(int[][] image, int sr, int sc, int color) {
+    public static int[][] FloodFillDFS(int[][] image, int sr, int sc, int color)
+    {
         var initial = image[sr][sc];
 
         if (initial != color)
@@ -649,27 +657,32 @@ public static class LeetCodeTasks
     #endregion
 
     #region 133. Clone Graph
-    public class Node {
+    public class Node
+    {
         public int val;
         public IList<Node> neighbors;
 
-        public Node() {
+        public Node()
+        {
             val = 0;
             neighbors = new List<Node>();
         }
 
-        public Node(int _val) {
+        public Node(int _val)
+        {
             val = _val;
             neighbors = new List<Node>();
         }
 
-        public Node(int _val, List<Node> _neighbors) {
+        public Node(int _val, List<Node> _neighbors)
+        {
             val = _val;
             neighbors = _neighbors;
         }
     }
 
-    public static Node CloneGraphBFS(Node node) {
+    public static Node CloneGraphBFS(Node node)
+    {
         if (node is null) return null;
         if (node.neighbors.Count == 0) return new Node(node.val);
 
@@ -699,7 +712,8 @@ public static class LeetCodeTasks
 
     private static Dictionary<int, Node> CloneGraphDFSDict = [];
 
-    public static Node CloneGraphDFS(Node node) {
+    public static Node CloneGraphDFS(Node node)
+    {
         if (node is null) return null;
         if (node.neighbors.Count == 0) return new Node(node.val);
         if (CloneGraphDFSDict.TryGetValue(node.val, out var ex)) return ex;
@@ -707,7 +721,7 @@ public static class LeetCodeTasks
         var newNode = new Node(node.val);
         CloneGraphDFSDict[newNode.val] = newNode;
 
-        foreach(var nei in node.neighbors)
+        foreach (var nei in node.neighbors)
         {
             newNode.neighbors.Add(CloneGraphDFS(nei));
         }
@@ -717,9 +731,10 @@ public static class LeetCodeTasks
     #endregion
 
     #region 205. Isomorphic Strings
-    public static bool IsIsomorphic(string s, string t) {
+    public static bool IsIsomorphic(string s, string t)
+    {
         if (s.Length != t.Length) return false;
-        
+
         var mapS = new Dictionary<int, int>();
         var mapT = new Dictionary<int, int>();
 
@@ -760,7 +775,7 @@ public static class LeetCodeTasks
             result.next = new ListNode();
             result = result.next;
 
-            if (l1 is null) 
+            if (l1 is null)
             {
                 result.val = l2.val;
                 l2 = l2.next;
@@ -770,12 +785,12 @@ public static class LeetCodeTasks
                 result.val = l1.val;
                 l1 = l1.next;
             }
-            else if (l1.val < l2.val) 
+            else if (l1.val < l2.val)
             {
                 result.val = l1.val;
                 l1 = l1.next;
             }
-            else 
+            else
             {
                 result.val = l2.val;
                 l2 = l2.next;
@@ -785,4 +800,81 @@ public static class LeetCodeTasks
         }
     }
     #endregion
+
+    #region 337. House Robber III
+
+    public static int Rob(TreeNode root)
+    {
+        var t = new Dictionary<TreeNode, int>();
+
+        return MaxIndependentSetTD(root);
+
+        int MaxIndependentSetTD(TreeNode v)
+        {
+            if (t.TryGetValue(v, out var d))
+            {
+                return d;
+            }
+
+            var m1 = v.val;
+
+            foreach (var c in v.GetChildren())
+            {
+                foreach (var gc in c.GetChildren())
+                {
+                    m1 += MaxIndependentSetTD(gc);
+                }
+            }
+
+            var m0 = 0;
+
+            foreach (var c in v.GetChildren())
+            {
+                m0 += MaxIndependentSetTD(c);
+            }
+
+            t[v] = Math.Max(m1, m0);
+
+            return t[v];
+        }
+    }
+
+    #endregion
+
+    #region 3147. Taking Maximum Energy From the Mystic Dungeon
+
+    public static int MaximumEnergy(int[] energy, int k)
+    {
+        var max = int.MinValue;
+
+        for (var i = energy.Length - 1; i >= 0; i--)
+        {
+            if (i + k < energy.Length)
+            {
+                energy[i] += energy[i + k];
+            }
+
+            max = Math.Max(max, energy[i]);
+        }
+
+        return max;
+    }
+
+    #endregion
+}
+
+public static class TreeExtensions
+{
+    public static IEnumerable<TreeNode> GetChildren(this TreeNode tree)
+    {
+        if (tree.left is not null)
+        {
+            yield return tree.left;
+        }
+
+        if (tree.right is not null)
+        {
+            yield return tree.right;
+        }
+    }
 }
