@@ -1,4 +1,8 @@
-﻿AisdStepikCourseTasks.KnapsackWithoutRepsBU();
+﻿YCoderunTasks.Dictionary_14();
+LeetCodeTasks.NumberOfStableArrays(3, 3, 2);
+Console.WriteLine(LeetCodeTasks.ConcatenatedBinary(12));
+
+AisdStepikCourseTasks.KnapsackWithoutRepsBU();
 
 Console.WriteLine(AisdStepikCourseTasks2.LowerBound([1, 3, 3, 3, 4, 5], 3));
 

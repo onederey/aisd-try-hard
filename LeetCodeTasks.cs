@@ -1,3 +1,11 @@
+using System.Reflection.Metadata;
+using System.Text;
+using System.Linq;
+using System.Numerics;
+using System.ComponentModel;
+using System.Runtime.InteropServices.Marshalling;
+using System.Runtime.Intrinsics.Arm;
+
 public class TreeNode
 {
     public int val;
@@ -861,6 +869,462 @@ public static class LeetCodeTasks
     }
 
     #endregion
+
+    #region 3666. Minimum Operations to Equalize Binary String
+
+    public static int MinOperations(string s, int k) {
+        throw new NotImplementedException("Не осилил.");        
+    }
+
+    #endregion
+
+    #region 1689. Partitioning Into Minimum Number Of Deci-Binary Numbers
+
+    public static int MinPartitions(string n) {
+        return n.Max(c => c) - 48;
+    }
+
+    #endregion
+
+    #region 1680. Concatenation of Consecutive Binary Numbers
+
+    public static int ConcatenatedBinary(int n)
+    {
+        var mod = (int)1e9 + 7;
+        var res = 1L;
+        var bits = 1;
+
+        for (var i = 2; i < n + 1; i++)
+        {
+            if ((i & (i - 1)) == 0)
+            {
+                bits++;
+            }
+            // Конкатенацию битовых представлений чисел можно представить как:
+            // 1 ("1") concat 2 ("10") => "110"
+            // 1 << bits(2) OR 2 => 4 + 2 => 6 ("110")
+
+            // Поддержание ограничения - всегда находим остаток от mod, чтобы не превысить лимит.
+            res = ((res << bits % mod) + i) % mod;
+        }
+
+        return (int)res;
+    }
+
+    #endregion
+
+    #region 1536. Minimum Swaps to Arrange a Binary Grid
+
+    public static int MinSwaps(int[][] grid)
+    {
+        var n = grid.Length;
+        var rowsZeros = new int[n];
+
+        for (var i = 0; i < n; i++)
+        {
+            rowsZeros[i] = n;
+            for (var j = grid[i].Length - 1; j >= 0; j--)
+            {
+                if (grid[i][j] == 1)
+                {
+                    rowsZeros[i] = n - j - 1;
+                    break;
+                }
+            }
+        }
+        
+        var swaps = 0;
+
+        for (var i = 0; i < n; i++)
+        {
+            var goal = n - i - 1;
+
+            if (rowsZeros[i] >= goal) 
+            {
+                continue;
+            }
+
+            var l = i;
+            var r = -1;
+            for (var j = i + 1; j < n; j++)
+            {
+                if (rowsZeros[j] >= goal)
+                {
+                  r = j;
+                  break;
+                }
+            }
+
+            if (r == -1)
+            {
+                return -1;
+            }
+
+            while (r > l)
+            {
+                (rowsZeros[r], rowsZeros[r - 1]) = (rowsZeros[r - 1], rowsZeros[r]);
+                
+                r--;
+                swaps++;
+            }
+        }
+
+        return swaps;
+    }
+
+    #endregion   
+
+    #region 1582. Special Positions in a Binary Matrix
+
+    public static int NumSpecial(int[][] mat) 
+    {
+        var r  = new int[mat.Length];
+        var c  = new int[mat.Length];
+
+        for (var i = 0; i < mat.Length; i++)
+        {
+            r[i] = 0;
+            for (var j = 0; j < mat[i].Length; j++)
+            {
+                if (mat[i][j] == 1)
+                {
+                    r[i]++;
+                    c[j]++;
+                }
+            }
+        }
+
+        var count = 0;
+        for (var i = 0; i < mat.Length; i++)
+        {
+            for (var j = 0; j < mat[i].Length; j++)
+            {
+                if (mat[i][j] == 1 && r[i] == 1 && c[j] == 1)
+                {
+                    count++;
+                }
+            }
+        }
+
+        return count;
+    }
+
+    #endregion 
+
+    #region 1545. Find Kth Bit in Nth Binary String
+
+    public static char FindKthBit(int n, int k) {        
+        var bits = new List<bool>
+        {
+            false,
+        };
+        
+        var prevEnd = bits.Count;
+        for (var i = 1; i < n; i++)
+        {
+            bits.Add(true);
+
+            var c = prevEnd;
+            while (c > 0)
+            {
+                bits.Add(!bits[c - 1]);
+                c--;
+            }
+            prevEnd = bits.Count;
+        }
+
+        return bits[k - 1] == true ? '1' : '0';
+    }
+
+    #endregion
+
+    #region 1758. Minimum Changes To Make Alternating Binary String
+
+    public static int MinOperations(string s)
+    {
+        var zOps = 0;
+        var oOps = 0;
+
+        for (var i = 0; i < s.Length; i++)
+        {
+            if (i % 2 == 0)
+            {
+                if (s[i] != '0') zOps++;
+                else oOps++;
+            }
+            else
+            {
+                if (s[i] != '0') oOps++;
+                else zOps++;
+            }
+        }
+
+        return Math.Min(zOps, oOps);
+    }
+
+    #endregion
+
+    #region 1784. Check if Binary String Has at Most One Segment of Ones
+
+    public static bool CheckOnesSegment(string s) 
+    {
+        var i = 0;
+        
+        for (; i < s.Length; i++)
+        {
+            if (s[i] != '1') break;
+        }
+        for (i = i + 1; i < s.Length; i++)
+        {
+            if (s[i] == '1') return false;
+        }
+
+        return true;
+    }
+
+    #endregion
+
+    #region 1888. Minimum Number of Flips to Make the Binary String Alternating
+
+    public static int MinFlips(string s)
+    {
+        var n = s.Length;
+
+        s += s;
+
+        var s01 = new char[s.Length];
+        var s10 = new char[s.Length];
+
+        var ops01 = 0;
+        var ops10 = 0;
+
+        var ans = int.MaxValue;
+
+        for (var i = 0; i < s.Length; i++)
+        {
+            if (i % 2 == 0) 
+            {
+                s01[i] = '0';
+                s10[i] = '1';
+            }
+            else
+            {
+                s01[i] = '1';
+                s10[i] = '0';
+            }
+
+            if (s[i] == s01[i]) ops10++;
+            else ops01++;
+
+            if (i == n - 1)
+            {
+                ans = Math.Min(ops01, ans);
+                ans = Math.Min(ops10, ans);
+
+                if (ans == 0) return 0;
+            }
+
+            if (i >= n)
+            {
+                if (s[i - n] != s01[i - n]) ops01--;
+                if (s[i - n] != s10[i - n]) ops10--;
+
+                ans = Math.Min(ops01, ans);
+                ans = Math.Min(ops10, ans);
+            }
+        }
+
+        return ans;
+    }
+    #endregion
+
+    #region 2170. Minimum Operations to Make the Array Alternating
+
+    public static int MinimumOperations(int[] nums) {
+        if (nums.Length == 1)
+        {
+            return 0;
+        }
+
+        var evenNums = new Dictionary<int, int>();
+        var evenCount = 0;
+        
+        var oddNums = new Dictionary<int, int>();
+        var oddCount = 0;
+
+        for (var i = 0; i < nums.Length; i++)
+        {
+            if (i % 2 == 0)
+            {
+                evenNums.TryGetValue(nums[i], out var t);
+                evenNums[nums[i]] = t + 1;
+                evenCount++;
+            }
+            else
+            {
+                oddNums.TryGetValue(nums[i], out var t);
+                oddNums[nums[i]] = t + 1;
+                oddCount++;
+            }
+        }
+
+        var topTwoEven = GetTopTwo(evenNums);
+        var topTwoOdd = GetTopTwo(oddNums);
+        
+        if (topTwoEven[0].Key != topTwoOdd[0].Key)
+        {
+            return evenCount - topTwoEven[0].Value
+                + oddCount - topTwoOdd[0].Value;
+        }
+        else
+        {
+            var a = int.MaxValue;
+            var b = int.MaxValue;
+
+            if (evenNums.Count > 1)
+            {
+                a = evenCount - topTwoEven[1].Value
+                    + oddCount - topTwoOdd[0].Value;
+            }
+            
+            if (oddNums.Count > 1)
+            {
+                b = evenCount - topTwoEven[0].Value
+                    + oddCount - topTwoOdd[1].Value;
+            }
+
+            var c = evenCount - topTwoEven[0].Value 
+                + oddCount;
+
+            var d = evenCount
+                + oddCount - topTwoOdd[0].Value;
+
+            var min = Math.Min(a, b);
+            min = Math.Min(min, c);
+            min = Math.Min(min, d);
+
+            return min;
+        }
+    }
+
+    private static KeyValuePair<int, int>[] GetTopTwo(Dictionary<int, int> dict)
+    {
+        var topTwo = new KeyValuePair<int, int>[2]
+        {
+            KeyValuePair.Create(0, 0), 
+            KeyValuePair.Create(0, 0)
+        };
+
+        foreach (var num in dict)
+        {
+            if (num.Value > topTwo[0].Value)
+            {
+                topTwo[1] = topTwo[0];
+                topTwo[0] = num;
+            }
+            else if (num.Value > topTwo[1].Value)
+            {
+                topTwo[1] = num;
+            }
+        }
+
+        return topTwo;
+    }
+
+    #endregion
+
+    #region 1980. Find Unique Binary String
+
+    public static string FindDifferentBinaryString(string[] nums) {
+        // ### Решение с поиском значения по диагонали.
+        // 1. Идем по диагонали и всегда берем противоположные значения.
+        var res = new char[nums.Length];
+        
+        for (var i = 0; i < nums.Length; i++)
+        {
+            res[i] = nums[i][i] == '1' ? '0' : '1';
+        }
+
+        return new string(res);
+        
+        // ### Решение с перебором бинарных чисел вручную.
+        // 1. Создаем HashSet для быстрых проверок - есть строка или нет
+        var h = new HashSet<string>(nums);
+
+        // 2. Создаем бинарные числа и проверяем, если такого нет, возвращаем
+        var first = new string('0', nums.Length);
+        var last = new string('1', nums.Length);
+
+        if (!h.Contains(first))
+        {
+            return first;
+        }
+
+        if (!h.Contains(last))
+        {
+            return last;
+        }
+
+        var @base = new StringBuilder(first);
+
+        for (var i = 1; i < Math.Pow(2, nums.Length); i++)
+        {
+            AddOneToBase();
+
+            var guess = @base.ToString();
+            Console.WriteLine(guess);
+
+            if (!h.Contains(guess))
+            {
+                return guess;
+            }
+        }
+
+        return "";
+
+        void AddOneToBase()
+        {
+            for (var i = @base.Length - 1; i >= 0; i--)
+            {
+                if (@base[i] == '0')
+                {
+                    @base[i] = '1';
+                    return;
+                }
+                else
+                {
+                    @base[i] = '0';
+                }
+            }
+        }
+    }
+
+    #endregion
+
+    #region 3129. Find All Possible Stable Binary Arrays I
+
+    public static int NumberOfStableArrays(int zero, int one, int limit)
+    {
+        throw new NotImplementedException("не осилил и не понял!!!");
+    }
+
+    #endregion
+
+    #region 1009. Complement of Base 10 Integer 
+
+    public static int BitwiseComplement(int n) 
+    {
+        var k = 0;
+        while (k < n || k == 0)
+        {
+            k = k << 1;
+            k++;
+        }
+        return n ^ k;
+    }
+
+    #endregion
+
 }
 
 public static class TreeExtensions
