@@ -971,4 +971,53 @@ public static class AisdStepikCourseTasks
     }
 
     #endregion
+
+    #region Лестница
+    public static void LadderTD()
+    {
+        _ = Console.ReadLine();
+        var nums = Console
+            .ReadLine()
+            .Split(" ")
+            .Select(int.Parse)
+            .ToArray();
+
+        var h = new Dictionary<int, int>();
+
+        Console.WriteLine(GetSum(nums.Length - 1));
+
+        int GetSum(int curr)
+        {
+            if (h.TryGetValue(curr, out var m))
+            {
+                return m;
+            }
+
+            if (curr == 0)
+            {
+                return nums[curr];
+            }
+
+            if (curr < 0)
+            {
+                return 0;
+            }
+
+            var m1 = GetSum(curr - 1);
+            var m2 = GetSum(curr - 2);
+
+            m = Math.Max(m1, m2) + nums[curr];
+            h[curr] = m;
+
+            return m;
+        }
+    }
+
+    public static void LadderBU()
+    {
+        _ = Console.ReadLine();
+        var nums = Console.ReadLine().Split(" ").Select(int.Parse).ToArray();
+        
+    }
+    #endregion
 }
