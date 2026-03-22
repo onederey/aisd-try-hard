@@ -1020,4 +1020,54 @@ public static class AisdStepikCourseTasks
         
     }
     #endregion
+
+    #region Калькулятор
+
+    public static void DumbCalc()
+    {
+        var n = int.Parse(Console.ReadLine());
+
+        var operations = new (int parent, int count)[n + 1];
+        operations[0] = (1, 0);
+
+        // Заполнение последовательности чисел
+        // Заполняем так - индекс текущее число, значение - его родитель 
+        // и количество операций (x2, x3 или +1)
+
+        for (var i = 1; i < operations.Length; i++)
+        {
+            FillIfNeeded(operations, i, i * 2);
+            FillIfNeeded(operations, i, i * 3);
+            FillIfNeeded(operations, i, i + 1);
+        }
+
+        Console.WriteLine(operations[n].count);
+
+        // Восстановление последовательности промежуточных чисел
+
+        var r = new List<int>(operations[n].count);
+
+        while (n > 0)
+        {
+            r.Add(n);
+            n = operations[n].parent;
+        }
+
+        r.Reverse();
+
+        Console.WriteLine(string.Join(' ', r));
+
+        static void FillIfNeeded((int parent, int count)[] array, int curr, int next)
+        {
+            if (next >= array.Length) return;
+
+            if (array[next].parent == 0                         // попадается в первый
+                || array[curr].count + 1 < array[next].count)   // можно получить с меньшим количеством шагов
+            {
+                array[next] = (curr, array[curr].count + 1);
+            }
+        }
+    }
+    
+    #endregion
 }
