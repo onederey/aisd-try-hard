@@ -1325,6 +1325,155 @@ public static class LeetCodeTasks
 
     #endregion
 
+    #region 3643. Flip Square Submatrix Vertically
+
+    public static int[][] ReverseSubmatrix(int[][] grid, int x, int y, int k) 
+    {
+        var count = k - 1 + x;
+        for (var i = 0; i < k / 2; i++)
+        {
+            for (var j = 0; j < k; j++)
+            {
+                (grid[i + x][j + y], grid[count][j + y]) = (grid[count][j + y], grid[i + x][j + y]);
+            }
+            count--;
+        }
+
+        return grid;
+    }
+
+    #endregion
+
+    #region 1886. Determine Whether Matrix Can Be Obtained By Rotation
+
+    public static bool FindRotation(int[][] mat, int[][] target) 
+    {
+        var transpose = new int[mat.Length][];
+
+        var n = 4;
+
+        while (n > 0)
+        {
+            var isSame = true;
+
+            for (var i = 0; i < mat.Length; i++)
+            {
+                transpose[i] = new int[mat.Length];
+                var dj = mat[i].Length - 1;
+                for (var j = dj; j >= 0; j--)
+                {
+                    transpose[i][dj - j] = mat[j][i];
+
+                    if (transpose[i][dj - j] != target[i][dj - j])
+                    {
+                        isSame = false;
+                    }
+                }
+            }
+
+            if (isSame)
+            {
+                return true;
+            }
+
+            mat = [.. transpose];
+            n--;
+        }
+
+        return false;
+    }
+
+    #endregion
+
+    #region 1594. Maximum Non Negative Product in a Matrix
+    public static int MaxProductPath(int[][] grid)
+    {
+        var mod = (int)(1e9 + 7);
+        var n = grid.Length;
+        var m = grid[0].Length;
+
+        var path = new (long Min, long Max)[n, m];
+        path[0, 0] = (grid[0][0], grid[0][0]);
+
+        for (var j = 1; j < m; j++)
+        {
+            var a = path[0, j - 1].Min * grid[0][j];
+            path[0, j] = (a, a); 
+        }
+
+        for (var i = 1; i < n; i++)
+        {
+            var a = path[i - 1, 0].Min * grid[i][0];
+            path[i, 0] = (a, a);
+        }
+
+        for (var i = 1; i < n; i++)
+        {
+            for (var j = 1; j < m; j++)
+            {
+                var cur = grid[i][j];
+                var left = path[i, j - 1];
+                var up = path[i - 1, j];
+
+                var leftA = cur * left.Min;
+                var leftB = cur * left.Max;
+
+                var upA = cur * up.Min;
+                var upB = cur * up.Max;
+
+                var min = Math.Min(
+                    Math.Min(leftA, leftB),
+                    Math.Min(upA, upB));
+
+                var max = Math.Max(
+                    Math.Max(leftA, leftB),
+                    Math.Max(upA, upB));
+
+                path[i, j] = (min, max);
+            }
+        }
+
+        var (_, maxPath) = path[n - 1, m - 1];
+
+        return maxPath > -1 ? (int)(maxPath % mod) : -1;
+    }
+    #endregion
+
+    #region 2906. Construct Product Matrix
+
+    public static int[][] ConstructProductMatrix(int[][] grid)
+    {
+        var mod = 12345;
+        var n = grid.Length;
+        var m = grid[0].Length;
+
+        var result = new int[n][];
+        var prefix = 1L;
+        for (var i = 0; i < n; i++)
+        {
+            result[i] = new int[m];
+            for (var j = 0; j < m; j++)
+            {
+                result[i][j] = (int)prefix;
+                prefix =  prefix * grid[i][j] % mod;
+            }
+        }
+
+        var suffix = 1L;
+        for (var i = n - 1; i >= 0; i--)
+        {
+            for (var j = m - 1; j >= 0; j--)
+            {
+                result[i][j] = result[i][j] * (int)suffix % mod;
+                suffix = suffix * grid[i][j] % mod;
+            }
+        }
+
+
+        return result;
+    }
+
+    #endregion
 }
 
 public static class TreeExtensions
