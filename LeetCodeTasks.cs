@@ -1474,6 +1474,150 @@ public static class LeetCodeTasks
     }
 
     #endregion
+
+    #region 3546. Equal Sum Grid Partition I
+
+    public static bool CanPartitionGrid(int[][] grid)
+    {
+        var rowSums = new long[grid.Length];
+        var colSums = new long[grid[0].Length];
+
+        for (var i = 0; i < grid.Length; i++)
+        {
+            for (var j = 0; j < grid[i].Length; j++)
+            {
+                rowSums[i] += grid[i][j];
+                colSums[j] += grid[i][j];
+            }
+        }
+
+        // Собираем префиксы и суффиксы по строкам
+        var prefixRow = new long[grid.Length];
+        var suffixRow = new long[grid.Length];
+
+        var prefix = 0L;
+        var suffix = 0L;
+
+        for (var i = 0; i < rowSums.Length; i++)
+        {
+            prefix += rowSums[i];
+            suffix += rowSums[rowSums.Length - 1 - i];
+
+            prefixRow[i] += prefix;
+            suffixRow[rowSums.Length - 1 - i] += suffix;
+        }
+
+        // Проверяем, можно ли провести горизонтальную линию
+        for (var i = 0; i < prefixRow.Length - 1; i++)
+        {
+            if (prefixRow[i] != 0 && prefixRow[i] == suffixRow[i + 1])
+            {
+                return true;
+            }
+        }
+
+        for (var i = prefixRow.Length - 1; i > 0; i--)
+        {
+            if (prefixRow[i] != 0 && suffixRow[i] == prefixRow[i - 1])
+            {
+                return true;
+            }
+        }
+
+        // Собираем префиксы и суффиксы по столбцам
+        var prefixCol = new long[grid[0].Length];
+        var suffixCol = new long[grid[0].Length];
+
+        prefix = 0;
+        suffix = 0;
+
+        for (var j = 0; j < colSums.Length; j++)
+        {
+            prefix += colSums[j];
+            suffix += colSums[colSums.Length - 1 - j];
+
+            prefixCol[j] += prefix;
+            suffixCol[colSums.Length - 1 - j] += suffix;
+        }
+
+        // Проверяем, можно ли провести вертикальную линию
+        for (var j = 0; j < prefixCol.Length - 1; j++)
+        {
+            if (prefixCol[j] != 0 && prefixCol[j] == suffixCol[j + 1])
+            {
+                return true;
+            }
+        }
+
+        for (var j = prefixCol.Length - 1; j > 0; j--)
+        {
+            if (prefixCol[j] != 0 && suffixCol[j] == suffixCol[j - 1])
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    #endregion
+
+    #region 2946. Matrix Similarity After Cyclic Shifts
+
+    public static bool AreSimilar(int[][] mat, int k) {
+        var s = k % mat[0].Length;
+
+        var original = new int[mat.Length][];
+        
+        for (var i = 0; i < mat.Length; i++)
+        {
+            original[i] = new int[mat[i].Length];
+            for (var j = 0; j < mat[i].Length; j++)
+            {
+                original[i][j] = mat[i][j];
+            }
+        }
+
+        while (s > 0)
+        {
+            for (var i = 0; i < mat.Length; i++)
+            {
+                var last = mat[i][^1];
+                var first = mat[i][0];
+                
+                if (i % 2 == 1)
+                {
+                    var prev = last;
+                    for (var j = 0; j < mat[i].Length; j++)
+                    {
+                        (prev, mat[i][j]) = (mat[i][j], prev);   
+                    }
+                }
+                else
+                {
+                    var prev = first;
+                    for (var j = mat[i].Length - 1; j >= 0; j--)
+                    {
+                        (prev, mat[i][j]) = (mat[i][j], prev);   
+                    }
+                }
+            }
+            
+            s--;
+        }
+
+        for (var i = 0; i < mat.Length; i++)
+        {
+            for (var j = 0; j < mat[i].Length; j++)
+            {
+                if (original[i][j] != mat[i][j]) return false;
+            }
+        }
+
+        return true;
+    }
+
+    #endregion
 }
 
 public static class TreeExtensions
