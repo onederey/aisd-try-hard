@@ -17,15 +17,29 @@ public static class ThreadTasks
     {
         const int limit = 1000;
 
-        Parallel.For(0, 10, (_) => Increment());
+        var threads = new Thread[10];
+        for (var i = 0; i < threads.Length; i++)
+        {
+            threads[i] = new Thread(Increment)
+            {
+                Name = $"Поток {i}"
+            };
 
-        Console.WriteLine(_counter);
+            threads[i].Start();
+        }
+
+        for (var i = 0; i < threads.Length; i++)
+        {
+            threads[i].Join();
+        }
+
+
+        Console.WriteLine("Результат: " + _counter);
 
         static void Increment()
         {
             while (true)
             {
-                Console.WriteLine(Environment.CurrentManagedThreadId);
                 lock (_sync)
                 {
                     if (_counter >= limit)
@@ -34,6 +48,7 @@ public static class ThreadTasks
                     }
 
                     _counter++;
+                    Console.WriteLine(Thread.CurrentThread.Name + ": " + _counter);
                 }
             }
         }
