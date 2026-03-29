@@ -1,5 +1,4 @@
-﻿ThreadTasks.CounterWithLimiter();
-YCoderunTasks.Dictionary_14();
+﻿YCoderunTasks.Dictionary_14();
 LeetCodeTasks.NumberOfStableArrays(3, 3, 2);
 Console.WriteLine(LeetCodeTasks.ConcatenatedBinary(12));
 
