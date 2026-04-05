@@ -1618,6 +1618,71 @@ public static class LeetCodeTasks
     }
 
     #endregion
+
+    #region 657. Robot Return to Origin
+    public static bool JudgeCircle(string moves)
+    {
+        var x = 0;
+        var y = 0;
+
+        foreach (var move in moves)
+        {
+            switch (move)
+            {
+                case 'L': 
+                  y--;
+                  break;
+                case 'R': 
+                  y++;
+                  break;
+                case 'U': 
+                  x--;
+                  break;
+                case 'D': 
+                  x++;
+                  break;
+            }
+        }
+
+        return x == 0 && y == 0;
+    }
+    #endregion
+
+    #region 2075. Decode the Slanted Ciphertext
+    public static string DecodeCiphertext(string encodedText, int rows)
+    {
+        if (rows == 1) return encodedText;
+
+        var cols = encodedText.Length / rows;
+        var m = new char[rows, cols];
+        var k = 0;
+
+        for (var i = 0; i < rows; i++)
+        {
+            for (var j = 0; j < cols; j++)
+            {
+                m[i, j] = encodedText[k];
+                k++;
+            }
+        }
+
+        var result = new StringBuilder();
+        k = 0;
+        while (k < cols)
+        {
+            var j = k;
+            for (var i = 0; i < rows && j < cols; i++)
+            {
+                result.Append(m[i, j]);
+                j++;
+            }
+
+            k++;
+        }
+
+        return result.ToString().TrimEnd();
+    }
+    #endregion
 }
 
 public static class TreeExtensions
